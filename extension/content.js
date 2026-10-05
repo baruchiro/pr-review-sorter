@@ -280,6 +280,7 @@
     order.forEach((item, i) => {
       const li = document.createElement("li");
       li.className = "prrs-panel-item";
+      li.setAttribute("data-prrs-path", item.path);
       const el = matchFile(map, item.path);
       if (!el) li.classList.add("prrs-missing");
 
@@ -331,7 +332,22 @@
         document.dispatchEvent(new CustomEvent("prrs:erase"));
       });
     }
+    syncViewed(panel, map);
     return panel;
+  }
+
+  /** GitHub's own "Viewed" mark: a checkbox on /files, a pressed button on /changes. */
+  function isViewed(fileEl) {
+    const box = fileEl.querySelector("input.js-reviewed-checkbox");
+    if (box) return box.checked;
+    return !!fileEl.querySelector('button[class*="MarkAsViewedButton"][aria-pressed="true"]');
+  }
+
+  function syncViewed(panel, map) {
+    panel.querySelectorAll(".prrs-panel-item[data-prrs-path]").forEach((li) => {
+      const el = matchFile(map, li.getAttribute("data-prrs-path"));
+      li.classList.toggle("prrs-viewed", !!el && isViewed(el));
+    });
   }
 
   // ---- Inline highlights + comments ----
@@ -570,7 +586,7 @@
     inflateToken, deflateToken, b64urlToBytes,
     collectFiles, decorate, makeBadge, makePanel, findLine, makeComment, addNote, applyNotes,
     applyFromLocation, prId, chooseOrder, eraseDecorations, storeGet, storeSet, storeRemove,
-    matchFile, filesContainerOf,
+    matchFile, filesContainerOf, syncViewed,
   };
   if (typeof window !== "undefined") window.PRReviewSorter = PRReviewSorter;
 
@@ -655,6 +671,12 @@
     // GitHub loads diffs progressively and navigates via Turbo; watch for both.
     const obs = new MutationObserver(() => run());
     obs.observe(document.documentElement, { childList: true, subtree: true });
+    const syncPanelViewed = () => {
+      const panel = document.getElementById("prrs-panel");
+      if (panel) syncViewed(panel, collectFiles(document));
+    };
+    document.addEventListener("change", syncPanelViewed);
+    new MutationObserver(syncPanelViewed).observe(document.documentElement, { subtree: true, attributeFilter: ["aria-pressed"] });
     document.addEventListener("turbo:load", run);
     document.addEventListener("pjax:end", run);
     run();
