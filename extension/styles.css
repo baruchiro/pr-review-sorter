@@ -278,10 +278,18 @@ html.prrs-page-docked.prrs-page-collapsed body {
   font-size: 11px;
 }
 
-.prrs-panel-item.prrs-viewed .prrs-panel-path,
-.prrs-panel-item.prrs-viewed .prrs-panel-count {
+.prrs-panel-item.prrs-viewed .prrs-panel-path {
   color: var(--prrs-fg-muted);
   opacity: 0.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
+  text-align: left;
+}
+
+.prrs-panel-item.prrs-viewed .prrs-panel-count {
+  display: none;
 }
 
 /* ---- Inline highlight + agent comment ---- */
