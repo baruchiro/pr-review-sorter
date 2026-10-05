@@ -292,7 +292,8 @@
       body.className = "prrs-panel-body";
       const name = document.createElement("span");
       name.className = "prrs-panel-path";
-      name.textContent = item.path;
+      // <bdi> keeps the path left-to-right when a Viewed row cuts its start (direction: rtl).
+      name.appendChild(document.createElement("bdi")).textContent = item.path;
       body.appendChild(name);
       if (item.reason) {
         const why = document.createElement("span");
