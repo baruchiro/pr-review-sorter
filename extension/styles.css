@@ -15,7 +15,6 @@
   --prrs-fg-muted: #656d76;
   --prrs-accent: #8250df;
   --prrs-blue: #0969da;
-  --prrs-green: #1a7f37;
   --prrs-hl-bg: rgba(240, 180, 0, 0.18);
   --prrs-hl-bar: #d4a72c;
   --prrs-danger-bg: #ffebe9;
@@ -31,7 +30,6 @@
   --prrs-fg-muted: #8b949e;
   --prrs-accent: #a371f7;
   --prrs-blue: #2f81f7;
-  --prrs-green: #238636;
   --prrs-hl-bg: rgba(240, 180, 0, 0.14);
   --prrs-hl-bar: #ae7c14;
   --prrs-danger-bg: #3c1618;
@@ -48,7 +46,6 @@
     --prrs-fg-muted: #8b949e;
     --prrs-accent: #a371f7;
     --prrs-blue: #2f81f7;
-    --prrs-green: #238636;
     --prrs-hl-bg: rgba(240, 180, 0, 0.14);
     --prrs-hl-bar: #ae7c14;
     --prrs-danger-bg: #3c1618;
@@ -268,9 +265,11 @@ html.prrs-page-docked.prrs-page-collapsed body {
   background: var(--prrs-fg-muted);
 }
 
-/* Marked "Viewed" in GitHub: a check replaces the number, and the reason stays readable. */
+/* Marked "Viewed" in GitHub: the row fades back, but its reason stays as readable as before. */
 .prrs-panel-item.prrs-viewed .prrs-panel-num {
-  background: var(--prrs-green);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--prrs-border);
+  color: var(--prrs-fg-muted);
   font-size: 0;
 }
 
@@ -279,8 +278,10 @@ html.prrs-page-docked.prrs-page-collapsed body {
   font-size: 11px;
 }
 
-.prrs-panel-item.prrs-viewed .prrs-panel-path {
+.prrs-panel-item.prrs-viewed .prrs-panel-path,
+.prrs-panel-item.prrs-viewed .prrs-panel-count {
   color: var(--prrs-fg-muted);
+  opacity: 0.6;
 }
 
 /* ---- Inline highlight + agent comment ---- */
