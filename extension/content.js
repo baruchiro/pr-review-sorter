@@ -300,10 +300,12 @@
 
   function makePanel(order, map) {
     const existing = document.getElementById("prrs-panel");
+    const wasCollapsed = !!existing && existing.classList.contains("prrs-collapsed");
     if (existing) existing.remove();
 
     const panel = document.createElement("div");
     panel.id = "prrs-panel";
+    if (wasCollapsed) panel.classList.add("prrs-collapsed");
 
     const head = document.createElement("div");
     head.className = "prrs-panel-head";
