@@ -221,7 +221,7 @@ check("new UI: order panel present", nu.panel);
 const viewedNew = await page.evaluate(() => {
   const S = window.PRReviewSorter;
   const unit = S.matchFile(S.collectFiles(document), "packages/app/mid.ts");
-  unit.insertAdjacentHTML("afterbegin", '<button class="MarkAsViewedButton-module__viewed__x" aria-pressed="true">Viewed</button>');
+  unit.insertAdjacentHTML("afterbegin", '<button class="prc-Button-ButtonBase-9n-Xk viewed__ObsxMH" aria-label="Viewed" aria-pressed="true">Viewed</button>');
   const panel = document.getElementById("prrs-panel");
   S.syncViewed(panel, S.collectFiles(document));
   return Array.from(panel.querySelectorAll(".prrs-panel-item")).map((li) => li.classList.contains("prrs-viewed"));
