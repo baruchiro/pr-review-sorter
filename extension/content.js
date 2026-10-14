@@ -393,7 +393,7 @@
   function isViewed(fileEl) {
     const box = fileEl.querySelector("input.js-reviewed-checkbox");
     if (box) return box.checked;
-    return !!fileEl.querySelector('button[class*="MarkAsViewedButton"][aria-pressed="true"]');
+    return !!fileEl.querySelector('button[aria-label="Viewed"][aria-pressed="true"]');
   }
 
   function syncViewed(panel, map) {
